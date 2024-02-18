@@ -6,8 +6,10 @@ class MiniGame {
 
   Item item1;
   Item item2;
+  Item item3;
+  Item item4;
 
-  Item items[] = new Item[2];
+  Item items[] = new Item[4];
   Box boxes[] = new Box[3];
 
   MiniGame() {
@@ -23,9 +25,13 @@ class MiniGame {
 
     item1 = new Item(new PVector(50, 50), width/2, height/2);
     item2 = new Item(new PVector(50, 50), width/2 - 100, height/2);
+    item3 = new Item(new PVector(50, 50), width/2 - 200, height/2);
+    item4 = new Item(new PVector(50, 50), width/2 - 300, height/2);
 
     items[0] = item1;
     items[1] = item2;
+    items[2] = item3;
+    items[3] = item4;
 
     //titleCard = (loadImage("TitleCard.png"));
   }
@@ -72,6 +78,7 @@ class MiniGame {
         if (box.mouseIsOver() && item.mouseHasBeenPressed()) {
           item.position.x = item.defaultX;
           item.position.y = item.defaultY;
+
           for (int i = 0; i < box.contents.length; i++) {
             if (box.contents[i] == null) {
               box.contents[i] = item;
@@ -82,20 +89,14 @@ class MiniGame {
             }
           }
         }
+
         // Removes all items from the selected box
-        else if (box.mouseHasBeenPressed() && (prevLeftPressed == false)) {
-          for (int i = 0; i < box.contents.length; i++) {
-            if (box.contents[i] == null) {
-              box.contents[i] = null;
-              item.inBox = false;
-              //println(box1.contents[i]);
-              box.contentCounter = 0;
-              break;
-            }
-          }
-        }
+
+d
+
         // Places Item back into default location
-        else if (!box.mouseIsOver() && item.mouseHasBeenPressed()) {
+
+        else if ((item.mouseIsOver() && !item.mouseHasBeenPressed()) || (!item.mouseIsOver() && !item.mouseHasBeenPressed())) { // When the mouse no longer touching the item or mouse press is off
           item.position.x = item.defaultX;
           item.position.y = item.defaultY;
         }
