@@ -10,6 +10,7 @@ Minim minim;
 
 Title title;
 MiniGame minigame;
+HighScores highScores;
 
 // Variable used for debugging and math
 float x;
@@ -21,10 +22,13 @@ boolean rightPressed = false;
 boolean prevLeftPressed = false;
 boolean prevRightPressed = false;
 
-
 PFont font;
 
 //int enemyCounter;
+
+String dialogue = "";
+float timer = 0;
+int i = 0;
 
 void setup() {
   size(1920, 1080); // Sets window dimensions
@@ -48,7 +52,7 @@ void draw() {
   // Draws each screen of the game when they are loaded
   if ( title != null) {
     minigame = null;
-    //gameOver = null;
+    highScores = null;
 
     title.update();
 
@@ -62,6 +66,15 @@ void draw() {
     minigame.update();
 
     minigame.draw();
+  }
+
+  if ( highScores != null) {
+    title = null;
+    minigame = null;
+
+    highScores.update();
+
+    highScores.draw();
   }
 
   //if ( gameOver != null) {
@@ -86,6 +99,26 @@ void draw() {
 
   prevLeftPressed = leftPressed;
   prevRightPressed = rightPressed;
+}
+
+void dynamicText(String input, color hue, float xPos, float yPos, float speed) {
+
+  // This splits the sentence into words
+  String[] list = split(input, " ");
+
+  timer += 0.5;
+  println(i);
+
+  if (timer > speed && i < list.length) {
+    dialogue += " " + list[i]; // I stumbled upon this by complete accident lmao!!!
+
+    i++;
+    timer = 0;
+  }
+
+  fill(hue);
+
+  text(dialogue, xPos, yPos);
 }
 
 void keyPressed() {

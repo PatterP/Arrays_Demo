@@ -25,7 +25,7 @@ class Title {
     learnButton.update();
     scoresButton.update();
     exitButton.update();
-    
+
     buttonPressed();
   }
 
@@ -48,6 +48,13 @@ class Title {
   void buttonPressed() {
     if (playButton.mouseHasBeenPressed() == true) {
       minigame = new MiniGame();
+      //theme.play();
+      //theme.loop();
+      //theme.play();
+      //theme.loop();
+    }
+    if (scoresButton.mouseHasBeenPressed() == true) {
+      highScores = new HighScores();
       //theme.play();
       //theme.loop();
       //theme.play();

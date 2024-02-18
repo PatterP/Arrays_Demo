@@ -1,46 +1,63 @@
 class MiniGame {
 
   Box box1;
-  //Box box2;
-  //Box box3;
+  Box box2;
+  Box box3;
 
-  Item item;
+  Item item1;
+  Item item2;
+
+  Item items[] = new Item[2];
+  Box boxes[] = new Box[3];
 
   MiniGame() {
 
     // Sets location and contents of buttons
-    box1 = new Box(new PVector(50, 50), width/2 - 50, height - 200);
-    //box2 = new Box(new PVector(50, 50), width/2 - 150, height - 200);
-    //box3 = new Box(new PVector(50, 50), width/2 + 50, height - 200);
+    box1 = new Box(new PVector(50, 50), width/2 - 50, height - 200, 16);
+    box2 = new Box(new PVector(50, 50), width/2 - 150, height - 200, 6);
+    box3 = new Box(new PVector(50, 50), width/2 + 50, height - 200, 10);
 
-    item = new Item(new PVector(50, 50), width/2, height/2);
+    boxes[0] = box1;
+    boxes[1] = box2;
+    boxes[2] = box3;
 
+    item1 = new Item(new PVector(50, 50), width/2, height/2);
+    item2 = new Item(new PVector(50, 50), width/2 - 100, height/2);
+
+    items[0] = item1;
+    items[1] = item2;
 
     //titleCard = (loadImage("TitleCard.png"));
   }
 
   void update() {
 
-    box1.update();
-    //box2.update();
-    //box3.update();
+    for (Box box : boxes) {
+      box.update();
+    }
 
-    if (item.inBox == false)
-      item.update();
+
+
+    for (Item item : items) {
+      if (item.inBox == false)
+        item.update();
+    }
 
     checkBox();
-    
+
     buttonPressed();
   }
 
   void draw() {
 
-    box1.draw();
-    //box2.draw();
-    //box3.draw();
+    for (Box box : boxes) {
+      box.draw();
+    }
 
-    if (item.inBox == false)
-      item.draw();
+    for (Item item : items) {
+      if (item.inBox == false)
+        item.draw();
+    }
   }
 
   // Switches screen based on button input
@@ -48,9 +65,48 @@ class MiniGame {
   }
 
   void checkBox() {
-    if (item.isMoving) {
-      if (box1.mouseHasBeenPressed())
-        item.inBox = true;
+
+    for (Box box : boxes) {
+      for (Item item : items) {
+        // Stores item in the selected box
+        if (box.mouseIsOver() && item.mouseHasBeenPressed()) {
+          item.position.x = item.defaultX;
+          item.position.y = item.defaultY;
+          for (int i = 0; i < box.contents.length; i++) {
+            if (box.contents[i] == null) {
+              box.contents[i] = item;
+              item.inBox = true;
+              //println(box1.contents[i]);
+              box.contentCounter++;
+              break;
+            }
+          }
+        }
+        // Removes all items from the selected box
+        else if (box.mouseHasBeenPressed() && (prevLeftPressed == false)) {
+          for (int i = 0; i < box.contents.length; i++) {
+            if (box.contents[i] == null) {
+              box.contents[i] = null;
+              item.inBox = false;
+              //println(box1.contents[i]);
+              box.contentCounter = 0;
+              break;
+            }
+          }
+        }
+        // Places Item back into default location
+        else if (!box.mouseIsOver() && item.mouseHasBeenPressed()) {
+          item.position.x = item.defaultX;
+          item.position.y = item.defaultY;
+        }
+        // Shows the number of items stored in a box
+        if (box.mouseIsOver()) {
+          fill(0);
+          textAlign(CENTER, CENTER);
+          textSize(24);
+          text(box.contentCounter + "/" + box.contents.length, box.position.x + box.size.x/2, box.position.y + box.size.y/2 + 50);
+        }
+      }
     }
   }
 }

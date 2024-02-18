@@ -37,7 +37,7 @@ class Button {
     fill(255);
     textAlign(CENTER, CENTER);
     textSize(48);
-    if(text != null)
+    if (text != null)
       text(text, position.x + size.x/2, position.y + size.y/2);
   }
 
@@ -58,7 +58,7 @@ class Button {
   // Checks to see if the mouse was pressed on the button
   boolean mouseHasBeenPressed() {
 
-    if (mouseIsOver() == true && mousePressed)
+    if (mouseIsOver() == true && leftPressed)
       return true;
 
     return false;
