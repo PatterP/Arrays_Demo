@@ -15,7 +15,7 @@ class Item extends Button {
   }
 
   void update() {
-
+    
     isClicked = mouseHasBeenPressed();
 
     if (isClicked)

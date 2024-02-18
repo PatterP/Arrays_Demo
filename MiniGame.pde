@@ -92,13 +92,24 @@ class MiniGame {
 
         // Removes all items from the selected box
 
-d
+        else if (box.mouseHasBeenPressed() && (prevLeftPressed == false)) {
+          for (int i = 0; i < box.contents.length; i++) {
+            if (box.contents[i] == null) {
+              box.contents[i] = null;
+              item.inBox = false;
+              //println(box1.contents[i]);
+              break;
+            }
+          }
+          box.contentCounter = 0;
+        }
 
         // Places Item back into default location
-
-        else if ((item.mouseIsOver() && !item.mouseHasBeenPressed()) || (!item.mouseIsOver() && !item.mouseHasBeenPressed())) { // When the mouse no longer touching the item or mouse press is off
+        // Hey Payton!!! Letting go or the mouse cursor is no longer touching the item will reset the item's position. You can change this if you'd like!!!
+        else if ((item.mouseIsOver() && !item.mouseHasBeenPressed()) || (!item.mouseIsOver() && !item.mouseHasBeenPressed())) {
           item.position.x = item.defaultX;
           item.position.y = item.defaultY;
+          item.isClicked = false;
         }
         // Shows the number of items stored in a box
         if (box.mouseIsOver()) {
