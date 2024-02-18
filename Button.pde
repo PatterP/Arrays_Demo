@@ -57,7 +57,6 @@ class Button {
 
   // Checks to see if the mouse was pressed on the button
   boolean mouseHasBeenPressed() {
-
     if (mouseIsOver() == true && leftPressed)
       return true;
 

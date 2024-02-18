@@ -4,13 +4,11 @@ class HighScores {
 
   // Instantiates buttons for title screen
   Button menuButton;
-  //Button exitButton;
 
   HighScores() {
 
     // Sets location and contents of buttons
     menuButton = new Button(width/2 - 200, 450 + 480, "Menu");
-    //exitButton = new Button(100, 450 + 480, "Exit");
 
     //titleCard = (loadImage("TitleCard.png"));
   }
@@ -51,19 +49,12 @@ class HighScores {
 
     // Draws buttons
     menuButton.draw();
-    //exitButton.draw();
   }
 
   // Switches screen based on button input
   void buttonPressed() {
     if (menuButton.mouseHasBeenPressed() == true) {
       title = new Title();
-      //theme.play();
-      //theme.loop();
-      //theme.play();
-      //theme.loop();
     }
-    //if (exitButton.mouseHasBeenPressed() == true)
-      //exit();
   }
 }

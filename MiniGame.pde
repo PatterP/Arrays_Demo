@@ -9,8 +9,11 @@ class MiniGame {
   Item item3;
   Item item4;
 
-  Item items[] = new Item[4];
+  Item items[] = new Item[3];
   Box boxes[] = new Box[3];
+
+  Box box;
+  Item item;
 
   MiniGame() {
 
@@ -23,15 +26,13 @@ class MiniGame {
     boxes[1] = box2;
     boxes[2] = box3;
 
-    item1 = new Item(new PVector(50, 50), width/2, height/2);
-    item2 = new Item(new PVector(50, 50), width/2 - 100, height/2);
-    item3 = new Item(new PVector(50, 50), width/2 - 200, height/2);
-    item4 = new Item(new PVector(50, 50), width/2 - 300, height/2);
+    item1 = new Item(new PVector(50, 50), width/2 - 150, height/2);
+    item2 = new Item(new PVector(50, 50), width/2 - 50, height/2);
+    item3 = new Item(new PVector(50, 50), width/2 + 50, height/2);
 
     items[0] = item1;
     items[1] = item2;
     items[2] = item3;
-    items[3] = item4;
 
     //titleCard = (loadImage("TitleCard.png"));
   }
@@ -71,53 +72,51 @@ class MiniGame {
   }
 
   void checkBox() {
-
     for (Box box : boxes) {
-      for (Item item : items) {
-        // Stores item in the selected box
-        if (box.mouseIsOver() && item.mouseHasBeenPressed()) {
-          item.position.x = item.defaultX;
-          item.position.y = item.defaultY;
+      if (box.mouseIsOver()) {
+        fill(0);
+        textAlign(CENTER, CENTER);
+        textSize(24);
+        text(box.contentCounter + "/" + box.contents.length, box.position.x + box.size.x/2, box.position.y + box.size.y/2 + 50);
+      }
+    }
+  }
 
-          for (int i = 0; i < box.contents.length; i++) {
-            if (box.contents[i] == null) {
-              box.contents[i] = item;
-              item.inBox = true;
-              //println(box1.contents[i]);
-              box.contentCounter++;
-              break;
+  void mousePressed() {
+    for (Item item : items) {
+      if (item.mouseIsOver() && item.isMoving == false) {
+        item.isMoving = true;
+        //println(item.isMoving);
+        return;
+      } else if (item.mouseIsOver() && item.isMoving == true) {
+        for (Box box : boxes) {
+          if (box.mouseIsOver()) {
+            for (int i = 0; i < box.contents.length; i++) {
+              if (box.contents[i] == null) {
+                box.contents[i] = item;
+                break;
+              }
             }
+            item.inBox = true;
+            box.contentCounter++;
           }
         }
-
-        // Removes all items from the selected box
-
-        else if (box.mouseHasBeenPressed() && (prevLeftPressed == false)) {
-          for (int i = 0; i < box.contents.length; i++) {
-            if (box.contents[i] == null) {
-              box.contents[i] = null;
-              item.inBox = false;
-              //println(box1.contents[i]);
-              break;
-            }
+        item.isMoving = false;
+        item.position.x = item.defaultX;
+        item.position.y = item.defaultY;
+        //println(item.isMoving);
+        return;
+      }
+    }
+    for (Box box : boxes) {
+      if (box.mouseIsOver() && box.contentCounter > 0) {
+        for (int i = 0; i < box.contents.length; i++) {
+          if (box.contents[i] != null) {
+            box.contents[i].inBox = false;
+            box.contents[i] = null;
           }
-          box.contentCounter = 0;
         }
-
-        // Places Item back into default location
-        // Hey Payton!!! Letting go or the mouse cursor is no longer touching the item will reset the item's position. You can change this if you'd like!!!
-        else if ((item.mouseIsOver() && !item.mouseHasBeenPressed()) || (!item.mouseIsOver() && !item.mouseHasBeenPressed())) {
-          item.position.x = item.defaultX;
-          item.position.y = item.defaultY;
-          item.isClicked = false;
-        }
-        // Shows the number of items stored in a box
-        if (box.mouseIsOver()) {
-          fill(0);
-          textAlign(CENTER, CENTER);
-          textSize(24);
-          text(box.contentCounter + "/" + box.contents.length, box.position.x + box.size.x/2, box.position.y + box.size.y/2 + 50);
-        }
+        box.contentCounter = 0;
       }
     }
   }

@@ -24,8 +24,6 @@ boolean prevRightPressed = false;
 
 PFont font;
 
-//int enemyCounter;
-
 String dialogue = "";
 float timer = 0;
 int i = 0;
@@ -61,7 +59,6 @@ void draw() {
 
   if ( minigame != null) {
     title = null;
-    //gameOver = null;
 
     minigame.update();
 
@@ -76,23 +73,6 @@ void draw() {
 
     highScores.draw();
   }
-
-  //if ( gameOver != null) {
-  //  theme.pause();
-  //  theme.rewind();
-  //  gameOver.update();
-
-  //  gameOver.draw();
-  //}
-
-  // Ends the game
-  //if (level != null) {
-  //  if (player.health < 1 || enemyCounter < 1) {
-  //    gameOver = new GameOver();
-
-  //    level = null;
-  //  }
-  //}
 
   // Updates inputs for keyboard and mouse
   Keyboard.update();
@@ -132,6 +112,10 @@ void keyReleased() {
 void mousePressed() {
   if (mouseButton == LEFT) leftPressed = true;
   if (mouseButton == RIGHT) rightPressed = true;
+
+  if ( minigame != null) {
+    minigame.mousePressed();
+  }
 }
 
 void mouseReleased() {

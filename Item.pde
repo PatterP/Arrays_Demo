@@ -15,25 +15,14 @@ class Item extends Button {
   }
 
   void update() {
-    
-    isClicked = mouseHasBeenPressed();
 
-    if (isClicked)
-      isMoving = endMove();
+    if (inBox == false)
+      isClicked = mouseHasBeenPressed();
 
     if (isMoving) {
       this.position.x = mouseX - size.x/2;
       this.position.y = mouseY - size.y/2;
     } else {
     }
-  }
-
-  boolean endMove() {
-
-    if (isMoving)
-      return false;
-
-
-    return true;
   }
 }
