@@ -1,3 +1,4 @@
+// Title screen
 class Title {
 
   //PImage titleCard;
@@ -16,7 +17,7 @@ class Title {
     scoresButton = new Button(880 - 100, 325 + 380, "Scores");
     exitButton = new Button(880 - 100, 450 + 380, "Exit");
 
-    //titleCard = (loadImage("TitleCard.png"));
+    background = (loadImage("Background.png"));
   }
 
   void update() {
@@ -31,11 +32,13 @@ class Title {
 
   void draw() {
 
-    //image(titleCard, 0, 0);
+    image(background, 0, 0);
 
     // Displays game name
-    //textAlign(BASELINE, BASELINE);
-    //textSize(60);
+    textAlign(CENTER, CENTER);
+    textSize(80);
+    fill(0);
+    text("Boxes[]", width/2 - 25, 300);
 
     // Draws buttons
     playButton.draw();
@@ -48,17 +51,12 @@ class Title {
   void buttonPressed() {
     if (playButton.mouseHasBeenPressed() == true) {
       minigame = new MiniGame();
-      //theme.play();
-      //theme.loop();
-      //theme.play();
-      //theme.loop();
     }
     if (scoresButton.mouseHasBeenPressed() == true) {
       highScores = new HighScores();
-      //theme.play();
-      //theme.loop();
-      //theme.play();
-      //theme.loop();
+    }
+    if (learnButton.mouseHasBeenPressed() == true) {
+      learn = new Learn();
     }
     if (exitButton.mouseHasBeenPressed() == true)
       exit();

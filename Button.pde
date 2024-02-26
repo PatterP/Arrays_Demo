@@ -7,6 +7,8 @@ class Button {
 
   String text; // Default text for the button class
 
+  PImage image;
+
   // Button constructor
   Button(float x, float y, String content) {
     position.x = x;
@@ -27,16 +29,25 @@ class Button {
 
   void draw() {
 
+    noStroke();
     if (mouseIsOver() == true)
       fill(102, 0, 0); // Makes the button green when the mouse is hovered over
     else
       fill(0); // Makes the button gray
-    rect(position.x, position.y, size.x, size.y);
+
+    // loads sprites of child objects that uses the Button class's codebase
+    if (text != null)
+      rect(position.x, position.y, size.x, size.y);
+
+    if (text == null) {
+      image(image, position.x, position.y);
+    }
 
     // Creates the text of the button
     fill(255);
     textAlign(CENTER, CENTER);
     textSize(48);
+    // Creates the button
     if (text != null)
       text(text, position.x + size.x/2, position.y + size.y/2);
   }
@@ -57,7 +68,7 @@ class Button {
 
   // Checks to see if the mouse was pressed on the button
   boolean mouseHasBeenPressed() {
-    if (mouseIsOver() == true && leftPressed)
+    if (mouseIsOver() == true && leftPressed && !prevLeftPressed)
       return true;
 
     return false;

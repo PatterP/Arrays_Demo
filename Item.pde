@@ -1,3 +1,4 @@
+// Item uses button class as template for on click events
 class Item extends Button {
 
   boolean isClicked = false;
@@ -6,9 +7,11 @@ class Item extends Button {
 
   float defaultX, defaultY;
 
-  Item(PVector size, float x, float y) {
+  Item(PImage image, float x, float y) {
     super(x, y);
-    this.size = size;
+    this.size.x = image.width;
+    this.size.y = image.height;
+    this.image = image;
 
     defaultX = x;
     defaultY = y;
@@ -19,10 +22,10 @@ class Item extends Button {
     if (inBox == false)
       isClicked = mouseHasBeenPressed();
 
+    // Allows the item to move
     if (isMoving) {
       this.position.x = mouseX - size.x/2;
       this.position.y = mouseY - size.y/2;
-    } else {
     }
   }
 }

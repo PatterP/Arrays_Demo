@@ -1,11 +1,14 @@
+// Box uses button class as template for on click events
 class Box extends Button {
 
   Item contents[];
   int contentCounter = 0;
 
-  Box(PVector size, float x, float y, int arrSize) {
+  Box(PImage image, float x, float y, int arrSize) {
     super(x, y);
-    this.size = size;
+    this.size.x = image.width;
+    this.size.y = image.height;
+    this.image = image;
 
     contents = new Item[arrSize];
 
